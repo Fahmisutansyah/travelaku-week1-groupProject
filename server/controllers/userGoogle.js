@@ -1,11 +1,11 @@
 const userGoogle = require('../models/userGoogle')
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_GOOGLE);
+const Helper = require('../helper/helper') 
 
 class UserGoogle{
     static googleSignIn(req, res, next){
         let payload
-      
         client.verifyIdToken({
             idToken: req.body.id_token,
             audience: process.env.CLIENT_GOOGLE
@@ -26,11 +26,13 @@ class UserGoogle{
                     res.status(200).json({token})
                 })
                 .catch(err => {
+                    console.log(err)
                     next(err)
                 })
             }
         })
         .catch( err =>{
+            console.log(err)
             next(err)
         })
     }
