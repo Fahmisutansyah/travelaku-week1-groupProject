@@ -10,6 +10,7 @@ router.use('/users', User)
 router.post('/weather', Weather);
 router.get('/currency', Currency.getCurrency)
 router.get('/cities', City.getCity)
+router.get('/cities/:city', City.getOneCity)
 router.get('/country', Country.getAllCountry)
 router.use('/oauth', userGoogle)
 
