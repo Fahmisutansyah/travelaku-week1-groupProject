@@ -123,6 +123,13 @@ function flagButton(element){
     $("#cities-container").empty()
   })
 }
+function cityButton(element){
+  $(`#city`).fadeOut(1000,function(){
+    $("#cities").fadeIn(1000,function(){
+      $("#slide-content").empty()
+    })
+  })
+}
 
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
@@ -138,9 +145,6 @@ $(document).ready(function () {
   $('#welcome').fadeIn(3000)
   $('#lets-login').fadeIn(3000)
   $('#login-buttons').fadeIn(3000)
-  $('#sign-out').click(function () {
-    signOut()
-  })
   $('.slider').slider();
   $('#isicarousel').carousel();
 });
