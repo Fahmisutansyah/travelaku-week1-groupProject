@@ -12,7 +12,22 @@ class City{
         .catch(err => {
             next(err)
         })
-    }   
+    }  
+    
+    static getOneCity(req, res, next){
+        const { city } = req.params
+
+        axios.get(`https://www.triposo.com/api/20181213/location.json?tag_labels=city&annotate=trigram:${city}&trigram=>=0.3&count=1`, {headers : {
+            "X-Triposo-Account" : '554JN6K6' , "X-Triposo-Token" : '6qxx6luhn0k0fhlou5m4h52poe8c0fjp'
+        }})
+        .then(({data})=> {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            next(err)
+        })
+        
+    }
 }
 
 module.exports = City
