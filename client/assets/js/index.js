@@ -124,6 +124,8 @@ function signOut() {
     $("#home").hide(function(){
       $("#login-page").fadeIn(1000)
     })
+
+    localStorage.removeItem('token')
   });
 
 }
