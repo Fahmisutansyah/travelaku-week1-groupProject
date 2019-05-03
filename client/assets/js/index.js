@@ -23,8 +23,35 @@ function fetchCountry(){
   })
 }
 
-function cityDetail(city){
-
+function cityDetails(city){
+  //$('#isicarousel').carousel();
+  $("#cities").fadeOut()
+  $.ajax({
+    url: `http://localhost:3000/cities/${city}`,
+    method:'GET'
+  })
+  .done(city=>{
+    console.log("UHUHAUHAHUHA")
+    console.log(city.results[0].images)
+    
+    city.results[0].images.forEach((element,index)=>{
+      console.log(element)
+      $("#slide-content")
+        .append(`<li>
+        <img src="${element.sizes.medium.url}"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>${element.caption}</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>`)
+      })
+    // console.log(city)
+    $('.slider').slider();
+    $('#city').fadeIn(1000)
+  })
+  .fail((jqXHR,textStatus)=>{
+    console.log(textStatus,'request failed')
+  })
 }
 function fetchCity(country){
   console.log(country)
@@ -99,8 +126,10 @@ function flagButton(element){
 
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
+  
   $('.parallax').parallax();
   $('.modal').modal();
+  $("#city").hide()
   $("#cities").hide()
   $('#home').hide()
   $('#welcome').hide()
@@ -112,4 +141,6 @@ $(document).ready(function () {
   $('#sign-out').click(function () {
     signOut()
   })
+  $('.slider').slider();
+  $('#isicarousel').carousel();
 });
