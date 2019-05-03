@@ -34,9 +34,17 @@ function cityDetails(city) {
   })
 
   .done(city=>{
+    console.log(city.results[0].coordinates.longitude)
+    cariVideo(city.results[0].name)
+    $("#showMap").on("click", function(){
+      $('#resultsMaps').toggle()
+    })
+    initMap(city.results[0].coordinates.longitude, city.results[0].coordinates.latitude)
     city.results[0].images.forEach((element,index)=>{
       $("#slide-content")
-        .append(`<li>
+        .append(`
+        <li>resultsYoutube
+
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
           <h3>${element.caption}</h3>
@@ -172,6 +180,7 @@ $(document).ready(function () {
   $('#login-buttons').fadeIn(3000)
   $('.slider').slider();
   $('#isicarousel').carousel();
+  $('#resultsMaps').hide()
 
   if(localStorage.getItem('token')){
     $('#home').fadeIn(2000)
