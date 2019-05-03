@@ -31,15 +31,13 @@ function cityDetails(city){
     method:'GET'
   })
   .done(city=>{
-
-    
     city.results[0].images.forEach((element,index)=>{
       $("#slide-content")
         .append(`<li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
           <h3>${element.caption}</h3>
-          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+          <h6 class="light grey-text text-lighten-3">Photo by: ${element.owner}</h6>
         </div>
       </li>`)
       })
@@ -77,7 +75,7 @@ function fetchCity(country){
                         <p>${element.snippet}</p>
                     </div>
                     <div class="card-action">
-                        <a href="#" onclick="cityDetails('${element.name}')">This is a link</a>
+                        <a href="#" onclick="cityDetails('${element.name}')">View city's details</a>
                     </div>
                 </div>
             </div>
@@ -122,7 +120,11 @@ function signOut() {
   auth2.signOut().then(function () {
     console.log('User signed out.');
     $("#home").hide(function(){
-      $("#login-page").fadeIn(1000)
+      $("#cities").hide(function(){
+        $("#city").hide(function(){
+          $("#login-page").fadeIn(1000)
+        })
+      })
     })
 
     localStorage.removeItem('token')
