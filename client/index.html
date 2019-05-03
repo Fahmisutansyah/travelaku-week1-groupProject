@@ -6,13 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="google-signin-client_id" content="275977492575-i699pga2e02kprg8k1fjdkug87p756qa.apps.googleusercontent.com">
+    <link rel="icon" type="image" href="/public/image/travel.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
         crossorigin="anonymous">
     <title>Travelaku</title>
+    <style>
+        #map{
+            height:360px;
+            width:600px;
+        }
+    </style>
 </head>
 
 <body style="background-image:url(https://i.imgur.com/lyzKDBO.jpg);background-size:cover">
+    
     <!-- city container -->
     <div class="container" id="city" style="padding-top: 9em">
         <div class="fixed-action-btn">
@@ -24,7 +32,7 @@
             </ul>
         </div>
         <div class="row">
-            <div class="col s7 center-align" >
+            <div class="col s6 center-align" >
                 <div class="slider">
                     <ul class="slides" id="slide-content">
 
@@ -45,6 +53,22 @@
                     </div>
                 </div>
                 <!-- youtube end -->
+                <!-- Maps start -->
+                <!-- Modal Trigger -->
+                <a id="showMap" class="waves-effect waves-light btn modal-trigger" href="#modalMaps" >Show Map</a>
+                <!-- Modal Structure -->
+                <div id="modalMaps" class="modal">
+                    <div class="modal-content">
+                            <div id="resultsMaps">
+                                    <!-- Maps result -->
+                                    <div id="map"></div>
+                            </div>  
+                
+                    </div>
+                    <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -167,6 +191,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src='./assets/js/index.js'></script>
     <script type="text/javascript" src='./assets/js/youtube.js'></script>
+    <script type="text/javascript" src='./assets/js/maps.js'></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAojjGTWZG4GfhQQOJ1CW4U12SZnNVT_LA">
+    </script>
 
 </body>
 

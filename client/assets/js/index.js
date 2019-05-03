@@ -31,14 +31,18 @@ function cityDetails(city){
     method:'GET'
   })
   .done(city=>{
+    console.log(city.results[0].coordinates.longitude)
     cariVideo(city.results[0].name)
+    $("#showMap").on("click", function(){
+      $('#resultsMaps').toggle()
+    })
+    initMap(city.results[0].coordinates.longitude, city.results[0].coordinates.latitude)
     city.results[0].images.forEach((element,index)=>{
       $("#slide-content")
         .append(`
-        <li>
+        <li>resultsYoutube
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
-
           <h3>${element.caption}</h3>
           <h6 class="light grey-text text-lighten-3">Photo by: ${element.owner}</h6>
         </div>
@@ -152,5 +156,6 @@ $(document).ready(function () {
   $('#login-buttons').fadeIn(3000)
   $('.slider').slider();
   $('#isicarousel').carousel();
+  $('#resultsMaps').hide()
 
 });
