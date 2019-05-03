@@ -28,8 +28,10 @@ function fetchCountry(){
 
 
 function cityDetails(cityName) {
-  //$('#isicarousel').carousel();
+  $("#resultsYoutube").empty()
   $("#cities").fadeOut()
+  $("#left-container-city").empty()
+  $("#left-container-city").append(`<h2>${cityName}</h2>`)
   $.ajax({
     url: `http://localhost:3000/cities/${cityName}`,
     method: 'GET'
@@ -37,6 +39,7 @@ function cityDetails(cityName) {
 
 
   .done(city=>{
+    $("#slide-content").empty()
     console.log(city.results[0].coordinates.longitude)
     cariVideo(city.results[0].name)
     $("#showMap").on("click", function(){
@@ -46,8 +49,7 @@ function cityDetails(cityName) {
     city.results[0].images.forEach((element,index)=>{
       $("#slide-content")
         .append(`
-        <li>resultsYoutube
-
+        <li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
           <h3>${element.caption}</h3>
@@ -62,6 +64,7 @@ function cityDetails(cityName) {
           method: 'GET'
         })
         .done(response => {
+          $("#weather").empty()
           console.log(response)
           $("#weather").append(
             `
