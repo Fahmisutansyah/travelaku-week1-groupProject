@@ -24,19 +24,19 @@ function fetchCountry() {
     })
 }
 
-function cityDetails(city) {
+function cityDetails(cityName) {
   //$('#isicarousel').carousel();
   $("#cities").fadeOut()
   $.ajax({
-    url: `http://localhost:3000/cities/${city}`,
+    url: `http://localhost:3000/cities/${cityName}`,
     method: 'GET'
   })
 
-  .done(city=>{
-    cariVideo(city.results[0].name)
-    city.results[0].images.forEach((element,index)=>{
-      $("#slide-content")
-        .append(`
+    .done(city => {
+      cariVideo(city.results[0].name)
+      city.results[0].images.forEach((element, index) => {
+        $("#slide-content")
+          .append(`
         <li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
@@ -48,6 +48,48 @@ function cityDetails(city) {
       })
       // console.log(city)
       $('.slider').slider();
+      $
+        .ajax({
+          url: `http://localhost:3000/weather/${cityName}`,
+          method: 'GET'
+        })
+        .done(response => {
+          console.log(response)
+          $("#weather").append(
+            `
+                            <div class="card horizontal transparent" style="border-radius:10px; width: 37em">
+                      <div class="card-image">
+                        <canvas id="${response.currently.icon}" width="300" height="300">
+                        </canvas>
+                      </div>
+                      <div class="card-stacked">
+                        <div class="card-content">
+                          <h3>Sumarry</h3>
+                          <h5>${response.currently.summary}</h5>
+                          <h3>Hourly</h3>
+                          <h5>${response.hourly.summary}</h5>
+                        </div>
+                      </div>
+                    </div>
+                            `
+          )
+
+          let icons = new Skycons({
+            color: "grey"
+          }),
+            list = [
+              "clear-day", "clear-night", "partly-cloudy-day",
+              "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+              "fog"
+            ],
+            i;
+          for (i = list.length; i--;)
+            icons.set(list[i], list[i]);
+          icons.play();
+        })
+        .fail((jqXHR, textstatus) => {
+          console.log('fail', textstatus)
+        })
       $('#city').fadeIn(1000)
     })
     .fail((jqXHR, textStatus) => {
