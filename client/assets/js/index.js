@@ -6,8 +6,8 @@ function fetchCountry(){
   })
   .done(country=>{
     country.forEach(element=>{
-      $("#collection").append(
-      `<li class="collection-item avatar">
+      $("#collection").append(`
+      <li class="collection-item avatar">
       <img src="${element.flag}" alt="" class="circle">
       <span class="title">${element.name}</span>
       <p>Region: ${element.region}<br>
@@ -33,14 +33,15 @@ function cityDetails(city){
   .done(city=>{
     console.log("UHUHAUHAHUHA")
     console.log(city.results[0].images)
-    
+    console.log(city.results[0].name,"ini city")
+    cariVideo(city.results[0].name)
     city.results[0].images.forEach((element,index)=>{
-      console.log(element)
       $("#slide-content")
-        .append(`<li>
+        .append(`
+        <li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
-          <h3>${element.caption}</h3>
+          <h3 id="cityName" value="${city.results[0].name}">${element.caption}</h3>
           <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
         </div>
       </li>`)
@@ -124,6 +125,8 @@ function flagButton(element){
   })
 }
 
+
+
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
   
@@ -143,4 +146,5 @@ $(document).ready(function () {
   })
   $('.slider').slider();
   $('#isicarousel').carousel();
+
 });
