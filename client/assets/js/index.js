@@ -7,8 +7,8 @@ function fetchCountry(){
   })
   .done(country=>{
     country.forEach(element=>{
-      $("#collection").append(`
-      <li class="collection-item avatar">
+      $("#collection").append(
+      `<li class="collection-item avatar">
       <img src="${element.flag}" alt="" class="circle">
       <span class="title">${element.name}</span>
       <p>Region: ${element.region}<br>
@@ -31,14 +31,11 @@ function cityDetails(city){
     method:'GET'
   })
   .done(city=>{
-    cariVideo(city.results[0].name)
     city.results[0].images.forEach((element,index)=>{
       $("#slide-content")
-        .append(`
-        <li>
+        .append(`<li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
-
           <h3>${element.caption}</h3>
           <h6 class="light grey-text text-lighten-3">Photo by: ${element.owner}</h6>
         </div>
@@ -104,19 +101,19 @@ function onSignIn(googleUser) {
     data : { id_token }
   })
   .done(data => {
-    console.log('berhasil login')
     localStorage.setItem('token', data.token)
+    fetchCountry()
+
+    $("#login-page").slideUp(2000,function(){
+      $("#home").fadeIn(1000)
+    })
   })
   .fail((xjhr, textStatus) =>{
     console.log(textStatus)
     console.log('fail login')
   })
 
-  fetchCountry()
-
-  $("#login-page").slideUp(2000,function(){
-    $("#home").fadeIn(1000)
-  })
+ 
 }
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
@@ -148,8 +145,6 @@ function cityButton(element){
   })
 }
 
-
-
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
   $('.parallax').parallax();
@@ -166,11 +161,6 @@ $(document).ready(function () {
   $('.slider').slider();
   $('#isicarousel').carousel();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7b7c48c0162ea3e08ac12168ab0b447634dca1da
   if(localStorage.getItem('token')){
     $('#home').fadeIn(2000)
     $('#welcome').hide()
@@ -179,11 +169,4 @@ $(document).ready(function () {
     fetchCountry()
   }
 
-<<<<<<< HEAD
-=======
->>>>>>> development
-=======
->>>>>>> fca45d75b3625012f83f436eadaa44f7255bb8ad
-=======
->>>>>>> 7b7c48c0162ea3e08ac12168ab0b447634dca1da
 });
