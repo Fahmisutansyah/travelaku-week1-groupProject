@@ -1,5 +1,6 @@
+var url = `http://localhost:3000`
+
 function fetchCountry(){
-  // console.log('anjayyy')
   $.ajax({
     url: "http://localhost:3000/country",
     method: "GET"
@@ -24,18 +25,15 @@ function fetchCountry(){
 }
 
 function cityDetails(city){
-  //$('#isicarousel').carousel();
   $("#cities").fadeOut()
   $.ajax({
     url: `http://localhost:3000/cities/${city}`,
     method:'GET'
   })
   .done(city=>{
-    console.log("UHUHAUHAHUHA")
-    console.log(city.results[0].images)
+
     
     city.results[0].images.forEach((element,index)=>{
-      console.log(element)
       $("#slide-content")
         .append(`<li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
@@ -45,7 +43,7 @@ function cityDetails(city){
         </div>
       </li>`)
       })
-    // console.log(city)
+
     $('.slider').slider();
     $('#city').fadeIn(1000)
   })
@@ -53,8 +51,8 @@ function cityDetails(city){
     console.log(textStatus,'request failed')
   })
 }
+
 function fetchCity(country){
-  console.log(country)
   $("#home").fadeOut(function(){
   
   })
@@ -65,7 +63,6 @@ function fetchCity(country){
     data: `country=${country}`
   })
   .done(cities=>{
-    console.log(cities)
     if(cities.more){
       cities.results.forEach(element=>{
         $("#cities-container").append(`<div class="row center-align">
@@ -99,7 +96,21 @@ function fetchCity(country){
 
 function onSignIn(googleUser) {
   let id_token = googleUser.getAuthResponse().id_token;
-  console.log(id_token)
+  
+  $.ajax({ 
+    url :`${url}/oauth/google-sign-in`,
+    method : "POST",
+    data : { id_token }
+  })
+  .done(data => {
+    console.log('berhasil login')
+    localStorage.setItem('token', data.token)
+  })
+  .fail((xjhr, textStatus) =>{
+    console.log(textStatus)
+    console.log('fail login')
+  })
+
   fetchCountry()
 
   $("#login-page").slideUp(2000,function(){
@@ -113,7 +124,6 @@ function signOut() {
     $("#home").hide(function(){
       $("#login-page").fadeIn(1000)
     })
-    // $("#sign-out").hide()
   });
 
 }
@@ -126,7 +136,6 @@ function flagButton(element){
 
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
-  
   $('.parallax').parallax();
   $('.modal').modal();
   $("#city").hide()
@@ -143,4 +152,13 @@ $(document).ready(function () {
   })
   $('.slider').slider();
   $('#isicarousel').carousel();
+
+  if(localStorage.getItem('token')){
+    $('#home').fadeIn(2000)
+    $('#welcome').hide()
+    $('#lets-login').hide()
+    $('#login-buttons').hide()
+    fetchCountry()
+  }
+
 });
