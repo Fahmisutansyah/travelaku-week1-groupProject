@@ -168,6 +168,9 @@ $(document).ready(function () {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7b7c48c0162ea3e08ac12168ab0b447634dca1da
   if(localStorage.getItem('token')){
     $('#home').fadeIn(2000)
     $('#welcome').hide()
@@ -176,8 +179,11 @@ $(document).ready(function () {
     fetchCountry()
   }
 
+<<<<<<< HEAD
 =======
 >>>>>>> development
 =======
 >>>>>>> fca45d75b3625012f83f436eadaa44f7255bb8ad
+=======
+>>>>>>> 7b7c48c0162ea3e08ac12168ab0b447634dca1da
 });
