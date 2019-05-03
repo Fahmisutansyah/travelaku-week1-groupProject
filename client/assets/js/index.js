@@ -8,6 +8,7 @@ function fetchCountry() {
       country.forEach(element => {
         $("#collection").append(
           `<li class="collection-item avatar">
+
       <img src="${element.flag}" alt="" class="circle">
       <span class="title">${element.name}</span>
       <p>Region: ${element.region}<br>
@@ -30,12 +31,16 @@ function cityDetails(city) {
     url: `http://localhost:3000/cities/${city}`,
     method: 'GET'
   })
-    .done(city => {
-      city.results[0].images.forEach((element, index) => {
-        $("#slide-content")
-          .append(`<li>
+
+  .done(city=>{
+    cariVideo(city.results[0].name)
+    city.results[0].images.forEach((element,index)=>{
+      $("#slide-content")
+        .append(`
+        <li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
+
           <h3>${element.caption}</h3>
           <h6 class="light grey-text text-lighten-3">Photo by: ${element.owner}</h6>
         </div>
@@ -139,6 +144,8 @@ function cityButton(element) {
   })
 }
 
+
+
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
 
@@ -155,4 +162,5 @@ $(document).ready(function () {
   $('#login-buttons').fadeIn(3000)
   $('.slider').slider();
   $('#isicarousel').carousel();
+
 });
