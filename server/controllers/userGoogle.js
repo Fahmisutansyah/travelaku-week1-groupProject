@@ -5,6 +5,7 @@ const client = new OAuth2Client(process.env.CLIENT_GOOGLE);
 class UserGoogle{
     static googleSignIn(req, res, next){
         let payload
+      
         client.verifyIdToken({
             idToken: req.body.id_token,
             audience: process.env.CLIENT_GOOGLE
