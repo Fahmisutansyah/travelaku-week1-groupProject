@@ -1,14 +1,16 @@
+
 var url = `http://localhost:3000`
 
 function fetchCountry(){
+
   $.ajax({
     url: "http://localhost:3000/country",
     method: "GET"
   })
-  .done(country=>{
-    country.forEach(element=>{
-      $("#collection").append(
-      `<li class="collection-item avatar">
+    .done(country => {
+      country.forEach(element => {
+        $("#collection").append(
+          `<li class="collection-item avatar">
       <img src="${element.flag}" alt="" class="circle">
       <span class="title">${element.name}</span>
       <p>Region: ${element.region}<br>
@@ -16,20 +18,21 @@ function fetchCountry(){
       </p>
       <a href="#!" class="secondary-content waves-effect waves-teal btn-flat" id="lets-go" onclick="fetchCity('${element.name}')"><i class="fas fa-fighter-jet"></i>LET's GO!</a>
   </li>`)
+      })
+      console.log(country)
     })
-    console.log(country)
-  })
-  .fail((jqXHR,textStatus)=>{
-    console.log(textStatus,'request failed')
-  })
+    .fail((jqXHR, textStatus) => {
+      console.log(textStatus, 'request failed')
+    })
 }
 
-function cityDetails(city){
+function cityDetails(city) {
   $("#cities").fadeOut()
   $.ajax({
     url: `http://localhost:3000/cities/${city}`,
-    method:'GET'
+    method: 'GET'
   })
+
   .done(city=>{
     city.results[0].images.forEach((element,index)=>{
       $("#slide-content")
@@ -54,7 +57,7 @@ function fetchCity(country){
   $("#home").fadeOut(function(){
   
   })
-    
+
   $.ajax({
     url: `http://localhost:3000/cities`,
     method: "GET",
@@ -64,6 +67,7 @@ function fetchCity(country){
     if(cities.more){
       cities.results.forEach(element=>{
         $("#cities-container").append(`<div class="row center-align">
+
         <div class="center-align cities">
             <div class="card horizontal">
                 <div class="card-image">
@@ -81,15 +85,23 @@ function fetchCity(country){
             </div>
         </div>
     </div>`)
-      $("#cities").fadeIn(1000)
-      })
-    }else if(!cities.more){
-      $("#cities").fadeIn(1000)
-    }
-  })
-  .fail((jqXHR,textStatus)=>{
-    console.log(textStatus,'request failed')
-  })
+          $("#not-found").hide()
+          $("#error-float").hide()
+          $("#float-button").show()
+          $("#cities-container").show()
+          $("#cities").fadeIn(1000)
+        })
+      } else if (!cities.more) {
+        $("#error-float").show()
+        $("#float-button").hide()
+        $("#cities-container").hide()
+        $("#not-found").show()
+        $("#cities").fadeIn(1000)
+      }
+    })
+    .fail((jqXHR, textStatus) => {
+      console.log(textStatus, 'request failed')
+    })
 }
 
 function onSignIn(googleUser) {
@@ -104,9 +116,9 @@ function onSignIn(googleUser) {
     localStorage.setItem('token', data.token)
     fetchCountry()
 
-    $("#login-page").slideUp(2000,function(){
-      $("#home").fadeIn(1000)
-    })
+
+  $("#login-page").slideUp(2000, function () {
+    $("#home").fadeIn(1000)
   })
   .fail((xjhr, textStatus) =>{
     console.log(textStatus)
@@ -119,9 +131,9 @@ function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
     console.log('User signed out.');
-    $("#home").hide(function(){
-      $("#cities").hide(function(){
-        $("#city").hide(function(){
+    $("#home").hide(function () {
+      $("#cities").hide(function () {
+        $("#city").hide(function () {
           $("#login-page").fadeIn(1000)
         })
       })
@@ -131,15 +143,15 @@ function signOut() {
   });
 
 }
-function flagButton(element){
-  $(`#${element}`).fadeOut(1000,function(){
+function flagButton(element) {
+  $(`#${element}`).fadeOut(1000, function () {
     $("#home").fadeIn(1000)
     $("#cities-container").empty()
   })
 }
-function cityButton(element){
-  $(`#city`).fadeOut(1000,function(){
-    $("#cities").fadeIn(1000,function(){
+function cityButton(element) {
+  $(`#city`).fadeOut(1000, function () {
+    $("#cities").fadeIn(1000, function () {
       $("#slide-content").empty()
     })
   })
@@ -147,6 +159,7 @@ function cityButton(element){
 
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
+
   $('.parallax').parallax();
   $('.modal').modal();
   $("#city").hide()

@@ -13,6 +13,18 @@
 </head>
 
 <body style="background-image:url(https://i.imgur.com/lyzKDBO.jpg);background-size:cover">
+
+
+
+    <!-- Modal Structure -->
+    <div id="logout" class="modal">
+        <div class="modal-content center-align">
+            <h4>Are you sure you want to log out?</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="signOut()">Yes</a>
+        </div>
+    </div>
     <!-- city container -->
     <div class="container" id="city" style="padding-top: 9em">
         <div class="fixed-action-btn">
@@ -20,11 +32,11 @@
             <ul>
                 <li><a class="btn-floating blue" onclick="flagButton('city')"><i class="fas fa-flag"></i></a></li>
                 <li><a class="btn-floating yellow" id="cities-button" onclick="cityButton('city')"><i class="fas fa-city"></i></a></li>
-                <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a class="btn-floating red modal-trigger" href="#logout"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
         <div class="row">
-            <div class="col s7 center-align" >
+            <div class="col s7 center-align">
                 <div class="slider">
                     <ul class="slides" id="slide-content">
 
@@ -37,11 +49,11 @@
                 <div id="modal1" class="modal">
                     <div class="modal-content">
                         <div id="resultsYoutube">
-                                <!-- youtube result -->
-                        </div>    
+                            <!-- youtube result -->
+                        </div>
                     </div>
                     <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
                     </div>
                 </div>
                 <!-- youtube end -->
@@ -54,7 +66,7 @@
         <div class="fixed-action-btn">
             <a class="btn-floating btn-large orange"><i class="fas fa-door-open"></i></a>
             <ul>
-                <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a class="btn-floating red modal-trigger" href="#logout" id="sign-out"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
         <div class="row center-align" style="margin-top:56px">
@@ -70,12 +82,31 @@
 
     <!-- cities container -->
     <div class="container" id="cities">
-        <div class="fixed-action-btn">
+        <!-- normal float button -->
+        <div class="fixed-action-btn" id="float-button">
             <a class="btn-floating btn-large orange"><i class="fas fa-door-open"></i></a>
             <ul>
                 <li><a class="btn-floating blue" onclick="flagButton('cities')"><i class="fas fa-flag"></i></a></li>
-                <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a class="btn-floating red modal-trigger" href="#logout" id="sign-out"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
+        </div>
+        <!-- error float button -->
+        <div class="fixed-action-btn" id="error-float">
+            <a class="btn-floating btn-large orange pulse"><i class="fas fa-door-open"></i></a>
+            <ul>
+                <li><a class="btn-floating blue pulse" onclick="flagButton('cities')"><i class="fas fa-flag"></i></a></li>
+                <li><a class="btn-floating red modal-trigger" href="#logout" id="sign-out"><i class="fas fa-sign-out-alt"></i></a></li>
+            </ul>
+        </div>
+        <div class="row" id="not-found" style="margin-top:18em">
+
+            <div class="card-panel teal">
+                <div class="card-content white-text">
+                    <h2 class="card-title">Oopps! Not Found</h2>
+                    <p>Let's go back to our countries page, click on the flag button on the bottom right corner!</p>
+                </div>
+            </div>
+
         </div>
         <div class="row center-align" style="overflow: scroll;height: 44em;margin-top: 70px;" id="cities-container">
 
@@ -162,15 +193,6 @@
         </div>
     </div>
 
-    <!-- youtube start -->
-    <div class="row center-align">
-        <a href="#!" id="tombolCari" class="modal-close waves-effect waves-green btn-flat">Show Video</a>
-        <div id="resultsYoutube">
-            <!-- youtube result -->
-        </div>    
-    </div>
-    <!-- youtube end -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
