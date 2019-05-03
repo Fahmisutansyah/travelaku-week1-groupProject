@@ -27,4 +27,6 @@ $(document).ready(function () {
   $('#sign-out').click(function () {
     signOut()
   })
+  
+  cariVideo()    
 });
