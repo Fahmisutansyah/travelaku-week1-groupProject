@@ -115,17 +115,13 @@ function onSignIn(googleUser) {
   .done(data => {
     localStorage.setItem('token', data.token)
     fetchCountry()
-
-
-  $("#login-page").slideUp(2000, function () {
-    $("#home").fadeIn(1000)
+    $("#login-page").slideUp(2000, function () {
+    $("#home").fadeIn(1000) })
   })
   .fail((xjhr, textStatus) =>{
     console.log(textStatus)
     console.log('fail login')
   })
-
- 
 }
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
@@ -139,6 +135,9 @@ function signOut() {
       })
     })
 
+    $('#welcome').fadeIn(3000)
+    $('#lets-login').fadeIn(3000)
+    $('#login-buttons').fadeIn(3000)
     localStorage.removeItem('token')
   });
 
