@@ -1,5 +1,8 @@
-function fetchCountry() {
-  // console.log('anjayyy')
+
+var url = `http://localhost:3000`
+
+function fetchCountry(){
+
   $.ajax({
     url: "http://localhost:3000/country",
     method: "GET"
@@ -8,7 +11,6 @@ function fetchCountry() {
       country.forEach(element => {
         $("#collection").append(
           `<li class="collection-item avatar">
-
       <img src="${element.flag}" alt="" class="circle">
       <span class="title">${element.name}</span>
       <p>Region: ${element.region}<br>
@@ -24,6 +26,7 @@ function fetchCountry() {
     })
 }
 
+
 function cityDetails(cityName) {
   //$('#isicarousel').carousel();
   $("#cities").fadeOut()
@@ -32,21 +35,26 @@ function cityDetails(cityName) {
     method: 'GET'
   })
 
-    .done(city => {
-      cariVideo(city.results[0].name)
-      city.results[0].images.forEach((element, index) => {
-        $("#slide-content")
-          .append(`
-        <li>
+
+  .done(city=>{
+    console.log(city.results[0].coordinates.longitude)
+    cariVideo(city.results[0].name)
+    $("#showMap").on("click", function(){
+      $('#resultsMaps').show()
+    })
+    initMap(city.results[0].coordinates.longitude, city.results[0].coordinates.latitude)
+    city.results[0].images.forEach((element,index)=>{
+      $("#slide-content")
+        .append(`
+        <li>resultsYoutube
+
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
-
           <h3>${element.caption}</h3>
           <h6 class="light grey-text text-lighten-3">Photo by: ${element.owner}</h6>
         </div>
       </li>`)
       })
-      // console.log(city)
       $('.slider').slider();
       $
         .ajax({
@@ -96,10 +104,10 @@ function cityDetails(cityName) {
       console.log(textStatus, 'request failed')
     })
 }
-function fetchCity(country) {
-  console.log(country)
-  $("#home").fadeOut(function () {
 
+function fetchCity(country){
+  $("#home").fadeOut(function(){
+  
   })
 
   $.ajax({
@@ -107,11 +115,11 @@ function fetchCity(country) {
     method: "GET",
     data: `country=${country}`
   })
-    .done(cities => {
-      console.log(cities)
-      if (cities.more) {
-        cities.results.forEach(element => {
-          $("#cities-container").append(`<div class="row center-align">
+  .done(cities=>{
+    if(cities.more){
+      cities.results.forEach(element=>{
+        $("#cities-container").append(`<div class="row center-align">
+
         <div class="center-align cities">
             <div class="card horizontal">
                 <div class="card-image">
@@ -150,11 +158,21 @@ function fetchCity(country) {
 
 function onSignIn(googleUser) {
   let id_token = googleUser.getAuthResponse().id_token;
-  console.log(id_token)
-  fetchCountry()
-
-  $("#login-page").slideUp(2000, function () {
-    $("#home").fadeIn(1000)
+  
+  $.ajax({ 
+    url :`${url}/oauth/google-sign-in`,
+    method : "POST",
+    data : { id_token }
+  })
+  .done(data => {
+    localStorage.setItem('token', data.token)
+    fetchCountry()
+    $("#login-page").slideUp(2000, function () {
+    $("#home").fadeIn(1000) })
+  })
+  .fail((xjhr, textStatus) =>{
+    console.log(textStatus)
+    console.log('fail login')
   })
 }
 function signOut() {
@@ -168,7 +186,11 @@ function signOut() {
         })
       })
     })
-    // $("#sign-out").hide()
+
+    $('#welcome').fadeIn(3000)
+    $('#lets-login').fadeIn(3000)
+    $('#login-buttons').fadeIn(3000)
+    localStorage.removeItem('token')
   });
 
 }
@@ -186,8 +208,6 @@ function cityButton(element) {
   })
 }
 
-
-
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
 
@@ -204,5 +224,14 @@ $(document).ready(function () {
   $('#login-buttons').fadeIn(3000)
   $('.slider').slider();
   $('#isicarousel').carousel();
+  $('#resultsMaps').hide()
+
+  if(localStorage.getItem('token')){
+    $('#home').fadeIn(2000)
+    $('#welcome').hide()
+    $('#lets-login').hide()
+    $('#login-buttons').hide()
+    fetchCountry()
+  }
 
 });
