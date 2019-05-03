@@ -41,7 +41,7 @@ function cityDetails(cityName) {
   .done(city=>{
     $("#slide-content").empty()
     console.log(city.results[0].coordinates.longitude)
-    cariVideo(city.results[0].name)
+    cariVideo(cityName)
     $("#showMap").on("click", function(){
       $('#resultsMaps').show()
     })

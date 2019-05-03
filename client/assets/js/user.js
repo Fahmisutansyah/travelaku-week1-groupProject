@@ -37,7 +37,8 @@ function loginUser(){
     .done(data =>{
         localStorage.setItem('token', data.token)
         fetchCountry()
-    
+        $('#login-email').val('')
+        $('#login-password').val('')
         $("#login-page").slideUp(2000,function(){
           $("#home").fadeIn(1000)
         })
@@ -49,6 +50,7 @@ function loginUser(){
     })
     .fail((jhr, textStatus) => {
         console.log(textStatus)
+        $('#login-password').val('')
         Swal.fire({
             title: 'Error Login!',
             type: 'error',
