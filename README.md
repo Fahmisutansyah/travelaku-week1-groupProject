@@ -104,7 +104,33 @@
         Code: 500 
         Content: { message : <error message> }
 ```
-
+## Get one city
+```
+URL : /cities/:city
+    Method : GET
+    Headers: None
+    Authenticate = None
+    Body : None
+    Params : city=[string]
+    Success Response :
+        Code 200
+        {
+            "results": [
+                {
+                    "name": "Jakarta",
+                    "snippet": "Known for music and shows. Recommended places to visit are Jakarta History Museum, Monas and National Museum.",
+                    "parent_id": "wv__Java",
+                    "score": 8.08429955159994,
+                    "images": 
+                    ...
+                        },<object>
+                    ]
+            ]
+        }
+    Error Response :
+        Code: 500 
+        Content: { message : <error message> }
+```
 ##  Get 10 cities from a country
 ```
     URL : /cities
@@ -112,7 +138,7 @@
     Headers: None
     Authenticate = None
     Body : None
-    Params : country=[string]
+    Query : country=[string]
     Success Response :
         Code 200
         {
@@ -174,7 +200,7 @@
     Headers: None
     Authenticate = None
     Body : None
-    Params : origin=[string], destination=[string] (name country)
+    Query : origin=[string], destination=[string] (name country)
     Success Response :
         Code 200
             {
@@ -224,6 +250,7 @@
         Code: 500/400
         Content: { message : <error message> }
 ```
+
 
 ## Use Application
 ```
