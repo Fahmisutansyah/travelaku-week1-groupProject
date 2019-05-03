@@ -167,6 +167,7 @@ $(document).ready(function () {
   $('#isicarousel').carousel();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   if(localStorage.getItem('token')){
     $('#home').fadeIn(2000)
     $('#welcome').hide()
@@ -177,4 +178,6 @@ $(document).ready(function () {
 
 =======
 >>>>>>> development
+=======
+>>>>>>> fca45d75b3625012f83f436eadaa44f7255bb8ad
 });
