@@ -1,5 +1,6 @@
-function cariVideo(){
-    $("#tombolCari").on("mouseenter", function() {
+function cariVideo(cityName){
+    $("#showYoutube").on("mouseenter", function() {
+        console.log(cityName, + "ini cityName")
         $("#resultsYoutube > div").remove()
         $.ajax({
             url:`https://www.googleapis.com/youtube/v3/search`,
@@ -7,7 +8,7 @@ function cariVideo(){
             data:{
                 key:'AIzaSyBLYRr8oVVLltzRbDQ3F9eerFgKbVU1AOc',
                 part: "snippet",
-                q: "afghanistan travel",
+                q: `${cityName} travel tourism`,
                 type:"video",
                 maxResults: 1,
                 order: "viewCount",
@@ -18,8 +19,7 @@ function cariVideo(){
             response.items.forEach(el => {
                 $("#resultsYoutube").append(
                     `<div class="item">
-                        <h2>${el.snippet.title}</h2>
-                        <iframe class="video w100" width="640" height="360" src="//www.youtube.com/embed/${el.id.videoId}" frameborder="0" allowfullscreen></iframe>
+                        <iframe class="video w100" width="640" height="360" center-align src="//www.youtube.com/embed/${el.id.videoId}" frameborder="0" allowfullscreen></iframe>
                     </div>`
                 );     
             });
