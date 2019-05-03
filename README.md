@@ -233,7 +233,7 @@ URL : /cities/:city
         Code: 500 
         Content: { message : <error message> }
 ```
-##  User Register
+##  User Login
 ```
     URL : /users/login
     Method : POST

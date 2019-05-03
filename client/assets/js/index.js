@@ -1,13 +1,16 @@
+
+var url = `http://localhost:3000`
+
 function fetchCountry(){
-  // console.log('anjayyy')
+
   $.ajax({
     url: "http://localhost:3000/country",
     method: "GET"
   })
-  .done(country=>{
-    country.forEach(element=>{
-      $("#collection").append(`
-      <li class="collection-item avatar">
+    .done(country => {
+      country.forEach(element => {
+        $("#collection").append(
+          `<li class="collection-item avatar">
       <img src="${element.flag}" alt="" class="circle">
       <span class="title">${element.name}</span>
       <p>Region: ${element.region}<br>
@@ -15,21 +18,21 @@ function fetchCountry(){
       </p>
       <a href="#!" class="secondary-content waves-effect waves-teal btn-flat" id="lets-go" onclick="fetchCity('${element.name}')"><i class="fas fa-fighter-jet"></i>LET's GO!</a>
   </li>`)
+      })
+      console.log(country)
     })
-    console.log(country)
-  })
-  .fail((jqXHR,textStatus)=>{
-    console.log(textStatus,'request failed')
-  })
+    .fail((jqXHR, textStatus) => {
+      console.log(textStatus, 'request failed')
+    })
 }
 
-function cityDetails(city){
-  //$('#isicarousel').carousel();
+function cityDetails(city) {
   $("#cities").fadeOut()
   $.ajax({
     url: `http://localhost:3000/cities/${city}`,
-    method:'GET'
+    method: 'GET'
   })
+
   .done(city=>{
     console.log(city.results[0].coordinates.longitude)
     cariVideo(city.results[0].name)
@@ -41,6 +44,7 @@ function cityDetails(city){
       $("#slide-content")
         .append(`
         <li>resultsYoutube
+
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
           <h3>${element.caption}</h3>
@@ -48,7 +52,7 @@ function cityDetails(city){
         </div>
       </li>`)
       })
-    // console.log(city)
+
     $('.slider').slider();
     $('#city').fadeIn(1000)
   })
@@ -56,22 +60,22 @@ function cityDetails(city){
     console.log(textStatus,'request failed')
   })
 }
+
 function fetchCity(country){
-  console.log(country)
   $("#home").fadeOut(function(){
   
   })
-    
+
   $.ajax({
     url: `http://localhost:3000/cities`,
     method: "GET",
     data: `country=${country}`
   })
   .done(cities=>{
-    console.log(cities)
     if(cities.more){
       cities.results.forEach(element=>{
         $("#cities-container").append(`<div class="row center-align">
+
         <div class="center-align cities">
             <div class="card horizontal">
                 <div class="card-image">
@@ -89,60 +93,80 @@ function fetchCity(country){
             </div>
         </div>
     </div>`)
-      $("#cities").fadeIn(1000)
-      })
-    }else if(!cities.more){
-      $("#cities").fadeIn(1000)
-    }
-  })
-  .fail((jqXHR,textStatus)=>{
-    console.log(textStatus,'request failed')
-  })
+          $("#not-found").hide()
+          $("#error-float").hide()
+          $("#float-button").show()
+          $("#cities-container").show()
+          $("#cities").fadeIn(1000)
+        })
+      } else if (!cities.more) {
+        $("#error-float").show()
+        $("#float-button").hide()
+        $("#cities-container").hide()
+        $("#not-found").show()
+        $("#cities").fadeIn(1000)
+      }
+    })
+    .fail((jqXHR, textStatus) => {
+      console.log(textStatus, 'request failed')
+    })
 }
 
 function onSignIn(googleUser) {
   let id_token = googleUser.getAuthResponse().id_token;
-  console.log(id_token)
-  fetchCountry()
-
-  $("#login-page").slideUp(2000,function(){
-    $("#home").fadeIn(1000)
+  
+  $.ajax({ 
+    url :`${url}/oauth/google-sign-in`,
+    method : "POST",
+    data : { id_token }
+  })
+  .done(data => {
+    localStorage.setItem('token', data.token)
+    fetchCountry()
+    $("#login-page").slideUp(2000, function () {
+    $("#home").fadeIn(1000) })
+  })
+  .fail((xjhr, textStatus) =>{
+    console.log(textStatus)
+    console.log('fail login')
   })
 }
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
     console.log('User signed out.');
-    $("#home").hide(function(){
-      $("#cities").hide(function(){
-        $("#city").hide(function(){
+    $("#home").hide(function () {
+      $("#cities").hide(function () {
+        $("#city").hide(function () {
           $("#login-page").fadeIn(1000)
         })
       })
     })
-    // $("#sign-out").hide()
+
+    $('#welcome').fadeIn(3000)
+    $('#lets-login').fadeIn(3000)
+    $('#login-buttons').fadeIn(3000)
+    localStorage.removeItem('token')
   });
 
 }
-function flagButton(element){
-  $(`#${element}`).fadeOut(1000,function(){
+function flagButton(element) {
+  $(`#${element}`).fadeOut(1000, function () {
     $("#home").fadeIn(1000)
     $("#cities-container").empty()
   })
 }
-function cityButton(element){
-  $(`#city`).fadeOut(1000,function(){
-    $("#cities").fadeIn(1000,function(){
+function cityButton(element) {
+  $(`#city`).fadeOut(1000, function () {
+    $("#cities").fadeIn(1000, function () {
       $("#slide-content").empty()
     })
   })
 }
 
-
-
 $(document).ready(function () {
   $('.fixed-action-btn').floatingActionButton();
-  
+
   $('.parallax').parallax();
   $('.modal').modal();
   $("#city").hide()
@@ -157,5 +181,13 @@ $(document).ready(function () {
   $('.slider').slider();
   $('#isicarousel').carousel();
   $('#resultsMaps').hide()
+
+  if(localStorage.getItem('token')){
+    $('#home').fadeIn(2000)
+    $('#welcome').hide()
+    $('#lets-login').hide()
+    $('#login-buttons').hide()
+    fetchCountry()
+  }
 
 });
