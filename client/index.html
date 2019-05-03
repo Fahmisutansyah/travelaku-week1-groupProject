@@ -70,12 +70,31 @@
 
     <!-- cities container -->
     <div class="container" id="cities">
-        <div class="fixed-action-btn">
+        <!-- normal float button -->
+        <div class="fixed-action-btn" id="float-button">
             <a class="btn-floating btn-large orange"><i class="fas fa-door-open"></i></a>
             <ul>
                 <li><a class="btn-floating blue" onclick="flagButton('cities')"><i class="fas fa-flag"></i></a></li>
                 <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
+        </div>
+        <!-- error float button -->
+        <div class="fixed-action-btn" id="error-float">
+            <a class="btn-floating btn-large orange pulse"><i class="fas fa-door-open"></i></a>
+            <ul>
+                <li><a class="btn-floating blue pulse" onclick="flagButton('cities')"><i class="fas fa-flag"></i></a></li>
+                <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
+            </ul>
+        </div>
+        <div class="row" id="not-found" style="margin-top:18em">
+
+            <div class="card-panel teal">
+                <div class="card-content white-text">
+                    <h2 class="card-title">Oopps! Not Found</h2>
+                    <p>Let's go back to our countries page, click on the flag button on the bottom right corner!</p>
+                </div>
+            </div>
+
         </div>
         <div class="row center-align" style="overflow: scroll;height: 44em;margin-top: 70px;" id="cities-container">
 
@@ -160,7 +179,6 @@
         </div>
     </div>
 
-    
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
         crossorigin="anonymous"></script>
