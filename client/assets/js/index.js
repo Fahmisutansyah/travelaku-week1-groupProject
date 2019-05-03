@@ -31,9 +31,6 @@ function cityDetails(city){
     method:'GET'
   })
   .done(city=>{
-    console.log("UHUHAUHAHUHA")
-    console.log(city.results[0].images)
-    console.log(city.results[0].name,"ini city")
     cariVideo(city.results[0].name)
     city.results[0].images.forEach((element,index)=>{
       $("#slide-content")
@@ -41,8 +38,9 @@ function cityDetails(city){
         <li>
         <img src="${element.sizes.medium.url}"> <!-- random image -->
         <div class="caption center-align">
-          <h3 id="cityName" value="${city.results[0].name}">${element.caption}</h3>
-          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+
+          <h3>${element.caption}</h3>
+          <h6 class="light grey-text text-lighten-3">Photo by: ${element.owner}</h6>
         </div>
       </li>`)
       })
@@ -81,7 +79,7 @@ function fetchCity(country){
                         <p>${element.snippet}</p>
                     </div>
                     <div class="card-action">
-                        <a href="#" onclick="cityDetails('${element.name}')">This is a link</a>
+                        <a href="#" onclick="cityDetails('${element.name}')">View city's details</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +110,11 @@ function signOut() {
   auth2.signOut().then(function () {
     console.log('User signed out.');
     $("#home").hide(function(){
-      $("#login-page").fadeIn(1000)
+      $("#cities").hide(function(){
+        $("#city").hide(function(){
+          $("#login-page").fadeIn(1000)
+        })
+      })
     })
     // $("#sign-out").hide()
   });
@@ -122,6 +124,13 @@ function flagButton(element){
   $(`#${element}`).fadeOut(1000,function(){
     $("#home").fadeIn(1000)
     $("#cities-container").empty()
+  })
+}
+function cityButton(element){
+  $(`#city`).fadeOut(1000,function(){
+    $("#cities").fadeIn(1000,function(){
+      $("#slide-content").empty()
+    })
   })
 }
 
@@ -141,9 +150,6 @@ $(document).ready(function () {
   $('#welcome').fadeIn(3000)
   $('#lets-login').fadeIn(3000)
   $('#login-buttons').fadeIn(3000)
-  $('#sign-out').click(function () {
-    signOut()
-  })
   $('.slider').slider();
   $('#isicarousel').carousel();
 
