@@ -18,8 +18,9 @@
         <div class="fixed-action-btn">
             <a class="btn-floating btn-large orange"><i class="fas fa-door-open"></i></a>
             <ul>
-                <li><a class="btn-floating yellow" id="cities-button"><i class="fas fa-city"></i></a></li>
-                <li><a class="btn-floating red" id="sign-out"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a class="btn-floating blue" onclick="flagButton('city')"><i class="fas fa-flag"></i></a></li>
+                <li><a class="btn-floating yellow" id="cities-button" onclick="cityButton('city')"><i class="fas fa-city"></i></a></li>
+                <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
         <div class="row">
@@ -39,7 +40,7 @@
         <div class="fixed-action-btn">
             <a class="btn-floating btn-large orange"><i class="fas fa-door-open"></i></a>
             <ul>
-                <li><a class="btn-floating red" id="sign-out"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
         <div class="row center-align" style="margin-top:56px">
@@ -59,7 +60,7 @@
             <a class="btn-floating btn-large orange"><i class="fas fa-door-open"></i></a>
             <ul>
                 <li><a class="btn-floating blue" onclick="flagButton('cities')"><i class="fas fa-flag"></i></a></li>
-                <li><a class="btn-floating red" id="sign-out"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a class="btn-floating red" id="sign-out" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
         <div class="row center-align" style="overflow: scroll;height: 44em;margin-top: 70px;" id="cities-container">
